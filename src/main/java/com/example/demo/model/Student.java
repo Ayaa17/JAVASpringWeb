@@ -18,7 +18,7 @@ public class Student {
     public UUID getUuid() {
         return uuid;
     }
-    @JsonIgnore  //忽略序列化
+//    @JsonIgnore  //忽略序列化
     public String getName() {
         return name;
     }

@@ -1,20 +1,51 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/student")
 public class StudentController {
 
+    private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @GetMapping
-    public Student hello(){
-        Student student = new Student(UUID.randomUUID(),"Kent");
-        return student;
+    public List<Student> getAllStudents(){
+        return studentService.getAllStudent();
+    }
+
+    @PostMapping
+    public String addStudent(@RequestBody Student student){
+        studentService.addStudent(student);
+        return "Added std";
+    }
+    @PutMapping
+    public String updateStudent(@RequestBody Student student){
+        studentService.updateStudent(student);
+        return "update std";
+    }
+
+    @DeleteMapping
+    public String RemoveStudent(@RequestBody Student student){
+        studentService.updateStudent(student);
+        return "update std";
+    }
+
+    @DeleteMapping(path = "{id}")
+    public String deleteStudent(@PathVariable("id")UUID id){
+        studentService.deleteStudent(id);
+        return "delete std";
+
     }
 
 }
